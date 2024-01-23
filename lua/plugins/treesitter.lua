@@ -16,6 +16,7 @@ return {
                 "python",
                 "rust",
                 "toml",
+                "yaml",
             },
             highlight = {
                 enable = true
