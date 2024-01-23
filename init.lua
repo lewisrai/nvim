@@ -13,8 +13,8 @@ vim.opt.wrap = false
 
 vim.g.mapleader = " "
 
-vim.keymap.set("n", "<C-u>", "<C-u>zz", {})
-vim.keymap.set("n", "<C-u>", "<C-u>zz", {})
+vim.keymap.set("n", "<C-u>", "<C-u>zz", {noremap = true})
+vim.keymap.set("n", "<C-d>", "<C-d>zz", {noremap = true})
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
