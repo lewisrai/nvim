@@ -6,6 +6,7 @@ vim.opt.tabstop = 4
 vim.opt.fileformats = "unix,dos"
 vim.opt.guicursor = ""
 vim.opt.number = true
+vim.opt.pumheight = 15
 vim.opt.relativenumber = true
 vim.opt.smartindent = true
 vim.opt.termguicolors = true
