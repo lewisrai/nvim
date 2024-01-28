@@ -20,4 +20,3 @@ return {
         vim.keymap.set("n", "<leader>g", ":lua toggle_lazygit()<CR>", {})
     end
 }
-
