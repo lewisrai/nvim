@@ -14,18 +14,12 @@ return {
 							vim.lsp.buf.format({
 								async = false,
 								bufnr = bufnr,
-								filter = function(client)
-									return client.name == "null-ls"
-								end,
 							})
 						end,
 					})
 				end
 			end,
 			sources = {
-				null_ls.builtins.formatting.clang_format,
-				null_ls.builtins.formatting.ruff_format,
-				null_ls.builtins.formatting.rustfmt,
 				null_ls.builtins.formatting.stylua,
 			},
 		})

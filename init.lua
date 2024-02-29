@@ -33,3 +33,5 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("plugins")
 
 vim.keymap.set("n", "<leader>l", ":Lazy<CR>", {})
+
+vim.cmd("autocmd BufWritePre * lua vim.lsp.buf.format()")

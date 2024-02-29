@@ -3,7 +3,11 @@ return {
 	version = "*",
 	opts = {},
 	config = function()
-		require("toggleterm").setup()
+		require("toggleterm").setup({
+			on_close = function()
+				require("neo-tree.sources.manager").refresh("filesystem")
+			end,
+		})
 
 		vim.keymap.set("n", "<leader>t", ":ToggleTerm direction=float<CR>", {})
 
