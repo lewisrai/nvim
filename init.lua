@@ -35,3 +35,4 @@ require("lazy").setup("plugins")
 vim.keymap.set("n", "<leader>l", ":Lazy<CR>", {})
 
 vim.cmd("autocmd BufWritePre * lua vim.lsp.buf.format()")
+vim.cmd("autocmd BufNewFile,BufRead *.wgsl setfiletype wgsl")

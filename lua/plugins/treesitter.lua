@@ -17,6 +17,7 @@ return {
 				"python",
 				"rust",
 				"toml",
+				"wgsl",
 				"yaml",
 			},
 			highlight = {
