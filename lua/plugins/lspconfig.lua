@@ -4,6 +4,10 @@ return {
 		local lspconfig = require("lspconfig")
 		local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
+		lspconfig.biome.setup({
+			root_dir = lspconfig.util.root_pattern(".git", "biome.json", "biome.jsonc"),
+		})
+
 		lspconfig.clangd.setup({
 			capabilities = capabilities,
 		})
@@ -19,6 +23,7 @@ return {
 		})
 
 		lspconfig.jedi_language_server.setup({})
+
 		lspconfig.ruff_lsp.setup({})
 
 		lspconfig.rust_analyzer.setup({

@@ -20,6 +20,7 @@ return {
 				end
 			end,
 			sources = {
+				null_ls.builtins.formatting.biome,
 				null_ls.builtins.formatting.stylua,
 			},
 		})

@@ -6,16 +6,14 @@ vim.opt.tabstop = 4
 vim.opt.fileformats = "unix,dos"
 vim.opt.guicursor = ""
 vim.opt.number = true
-vim.opt.pumheight = 15
+vim.opt.pumheight = 12
 vim.opt.relativenumber = true
+vim.opt.scrolloff = 26
 vim.opt.smartindent = true
 vim.opt.termguicolors = true
 vim.opt.wrap = false
 
 vim.g.mapleader = " "
-
-vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true })
-vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true })
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
