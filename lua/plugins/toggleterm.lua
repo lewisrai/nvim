@@ -9,7 +9,9 @@ return {
 			end,
 		})
 
-		vim.keymap.set("n", "<leader>t", ":ToggleTerm direction=float<CR>", {})
+		vim.keymap.set("n", "<leader>t", function()
+			vim.api.nvim_exec("ToggleTerm direction=float", false)
+		end, {})
 
 		local Terminal = require("toggleterm.terminal").Terminal
 		local lazygit = Terminal:new({
@@ -17,10 +19,8 @@ return {
 			direction = "float",
 		})
 
-		function toggle_lazygit()
+		vim.keymap.set("n", "<leader>g", function()
 			lazygit:toggle()
-		end
-
-		vim.keymap.set("n", "<leader>g", ":lua toggle_lazygit()<CR>", {})
+		end, {})
 	end,
 }

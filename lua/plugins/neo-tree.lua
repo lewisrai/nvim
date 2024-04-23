@@ -2,11 +2,13 @@ return {
 	"nvim-neo-tree/neo-tree.nvim",
 	branch = "v3.x",
 	dependencies = {
+		"MunifTanjim/nui.nvim",
 		"nvim-lua/plenary.nvim",
 		"nvim-tree/nvim-web-devicons",
-		"MunifTanjim/nui.nvim",
 	},
 	config = function()
-		vim.keymap.set("n", "<leader>e", ":Neotree filesystem reveal left<CR>", {})
+		vim.keymap.set("n", "<leader>e", function()
+			vim.api.nvim_exec("Neotree filesystem reveal left", false)
+		end, {})
 	end,
 }
