@@ -5,6 +5,7 @@ vim.opt.tabstop = 4
 
 vim.opt.fileformats = "unix,dos"
 vim.opt.guicursor = ""
+vim.opt.laststatus = 3
 vim.opt.number = true
 vim.opt.pumheight = 12
 vim.opt.relativenumber = true
@@ -31,6 +32,3 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("plugins")
 
 vim.keymap.set("n", "<leader>l", ":Lazy<CR>", {})
-
-vim.cmd("autocmd BufWritePre * lua vim.lsp.buf.format()")
-vim.cmd("autocmd BufNewFile,BufRead *.wgsl setfiletype wgsl")
