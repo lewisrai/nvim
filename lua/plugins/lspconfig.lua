@@ -10,7 +10,7 @@ return {
 			capabilities = capabilities,
 		})
 
-		lspconfig.ruff_lsp.setup({})
+		lspconfig.ruff.setup({})
 
 		lspconfig.rust_analyzer.setup({
 			capabilities = capabilities,
