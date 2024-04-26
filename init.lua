@@ -34,3 +34,10 @@ require("lazy").setup("plugins")
 vim.keymap.set("n", "<leader>l", function()
 	vim.api.nvim_exec("Lazy", false)
 end, {})
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+	pattern = "*",
+	callback = function()
+		vim.lsp.buf.format()
+	end,
+})
