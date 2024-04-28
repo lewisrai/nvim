@@ -10,6 +10,22 @@ return {
 			capabilities = capabilities,
 		})
 
+		lspconfig.jdtls.setup({
+			cmd = {
+				"jdtls",
+				"-configuration",
+				"C:/Users/Raiwin/AppData/Local/Temp/jdtls/config",
+				"-data",
+				"C:/Users/Raiwin/AppData/Local/Temp/jdtls/workspace",
+			},
+
+			handlers = {
+				["$/progress"] = function(_, _, _) end,
+			},
+		})
+
+		lspconfig.jedi_language_server.setup({})
+
 		lspconfig.ruff.setup({})
 
 		lspconfig.rust_analyzer.setup({
