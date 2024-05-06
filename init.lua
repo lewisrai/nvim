@@ -9,7 +9,6 @@ vim.opt.laststatus = 3
 vim.opt.number = true
 vim.opt.pumheight = 12
 vim.opt.relativenumber = true
-vim.opt.scrolloff = 26
 vim.opt.smartindent = true
 vim.opt.termguicolors = true
 vim.opt.wrap = false
@@ -41,3 +40,11 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 		vim.lsp.buf.format()
 	end,
 })
+
+vim.keymap.set("n", "<leader>t", function()
+	vim.api.nvim_exec("terminal", false)
+end, {})
+
+vim.keymap.set("n", "<leader>g", function()
+	vim.api.nvim_exec("terminal", false)
+end, {})
