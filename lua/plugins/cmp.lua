@@ -20,6 +20,6 @@ return {
 			}),
 		})
 
-		vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, { desc = "Info" })
+		vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, {})
 	end,
 }

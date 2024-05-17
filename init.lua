@@ -32,9 +32,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("plugins")
 
-vim.keymap.set("n", "q", function()
-	vim.api.nvim_exec(":nohl")
-end, {})
+vim.keymap.set("n", "q", ":nohl<CR>", { silent = true })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
 	pattern = "*",
