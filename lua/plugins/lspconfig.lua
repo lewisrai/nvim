@@ -2,27 +2,9 @@ return {
     "neovim/nvim-lspconfig",
     event = "VeryLazy",
     dependencies = {
-        "hrsh7th/nvim-cmp",
         "hrsh7th/cmp-nvim-lsp",
     },
     config = function()
-        local cmp = require("cmp")
-
-        cmp.setup({
-            window = {
-                completion = cmp.config.window.bordered(),
-                documentation = cmp.config.window.bordered(),
-            },
-            mapping = cmp.mapping.preset.insert({
-                ["<C-Space>"] = cmp.mapping.complete(),
-                ["<C-e>"] = cmp.mapping.abort(),
-                ["<CR>"] = cmp.mapping.confirm({ select = true }),
-            }),
-            sources = cmp.config.sources({
-                { name = "nvim_lsp" },
-            }),
-        })
-
         local lspconfig = require("lspconfig")
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
@@ -33,9 +15,12 @@ return {
         })
 
         lspconfig.jdtls.setup({
-            init_options = {
-                config = "C:/Users/Raiwin/AppData/Local/Temp/jdtls/config",
-                workspace = "C:/Users/Raiwin/AppData/Local/Temp/jdtls/workspace",
+            cmd = {
+                "jdtls",
+                "-configuration",
+                "C:/Users/Raiwin/AppData/Local/Temp/jdtls/config",
+                "-data",
+                "C:/Users/Raiwin/AppData/Local/Temp/jdtls/workspace",
             },
             handlers = {
                 ["$/progress"] = function() end,
@@ -60,11 +45,10 @@ return {
                         checkThirdParty = false,
                         library = {
                             vim.env.VIMRUNTIME,
-                        }
+                        },
                     },
                 })
             end,
-
             settings = {
                 Lua = {}
             }

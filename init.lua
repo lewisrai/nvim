@@ -22,41 +22,46 @@ vim.opt.smartcase = true
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-vim.diagnostic.config({ signs = false })
+vim.diagnostic.config({
+    signs = false,
+})
 
-function Open_lazygit()
-    vim.api.nvim_exec2("tabnew", { output = false })
+vim.keymap.set("n", "<leader>l", function()
+    vim.api.nvim_exec2("tabnew", {})
     vim.fn.termopen("lazygit")
-end
+end)
 
-vim.keymap.set("n", "<leader>cc", "<cmd>cd C:\\Users\\Raiwin\\Appdata\\Local\\nvim<CR>")
+vim.keymap.set("n", "<leader>cc", "<cmd>cd C:/Users/Raiwin/Appdata/Local/nvim<CR>")
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float)
 vim.keymap.set("n", "<leader>e", "<cmd>Explore<CR>")
 vim.keymap.set("n", "<leader>t", "<cmd>terminal<CR>")
-vim.keymap.set("n", "<leader>l", Open_lazygit)
 
-function Auto_centre_insert()
-    local line = vim.api.nvim_win_get_cursor(0)[1]
-    if line ~= vim.b.last_line then
-        vim.api.nvim_exec2("normal zz", { output = false })
-        vim.b.last_line = line
+vim.api.nvim_create_autocmd("CursorMovedI", {
+    pattern = "*",
+    callback = function()
+        local line = vim.api.nvim_win_get_cursor(0)[1]
+        if line ~= vim.b.last_line then
+            vim.api.nvim_exec2("normal zz", {})
+            vim.b.last_line = line
 
-        local column = vim.fn.getcurpos()[5]
-        vim.fn.cursor({ line, column })
-    end
-end
+            local column = vim.fn.getcurpos()[5]
+            vim.fn.cursor({ line, column })
+        end
+    end,
+})
 
-function Setup_terminal()
-    vim.api.nvim_exec2("setlocal nonumber norelativenumber signcolumn=no", { output = false })
-    vim.api.nvim_exec2("startinsert", { output = false })
-end
+vim.api.nvim_create_autocmd("TermOpen", {
+    pattern = "*",
+    callback = function()
+        vim.api.nvim_exec2("setlocal nonumber norelativenumber signcolumn=no", {})
+        vim.api.nvim_exec2("startinsert", {})
+    end,
+})
 
-vim.api.nvim_exec2("autocmd BufWrite * lua vim.lsp.buf.format()", { output = false })
-vim.api.nvim_exec2("autocmd CursorMoved * normal zz", { output = false })
-vim.api.nvim_exec2("autocmd CursorMovedI * lua Auto_centre_insert()", { output = false })
-vim.api.nvim_exec2("autocmd TermClose * bd!", { output = false })
-vim.api.nvim_exec2("autocmd TermOpen * lua Setup_terminal()", { output = false })
-vim.api.nvim_exec2("autocmd TextYankPost * lua vim.highlight.on_yank()", { output = false })
+vim.api.nvim_exec2("autocmd BufWrite * lua vim.lsp.buf.format()", {})
+vim.api.nvim_exec2("autocmd CursorMoved * normal zz", {})
+vim.api.nvim_exec2("autocmd TermClose * bd!", {})
+vim.api.nvim_exec2("autocmd TextYankPost * lua vim.highlight.on_yank()", {})
 
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
