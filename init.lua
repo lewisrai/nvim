@@ -31,7 +31,6 @@ vim.keymap.set("n", "<leader>l", function()
     vim.fn.termopen("lazygit")
 end)
 
-vim.keymap.set("n", "<leader>cc", "<cmd>cd C:/Users/Raiwin/Appdata/Local/nvim<CR>")
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float)
 vim.keymap.set("n", "<leader>e", "<cmd>Explore<CR>")
 vim.keymap.set("n", "<leader>t", "<cmd>terminal<CR>")
