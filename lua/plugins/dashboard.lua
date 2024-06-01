@@ -51,8 +51,9 @@ return {
                     { action = require("telescope.builtin").find_files, desc = " Find File", icon = " ", key = "f" },
                     { action = new_file, desc = " New File", icon = " ", key = "n" },
                     { action = cd, desc = " Go To Directory", icon = " ", key = "g" },
-                    { action = "Lazy", desc = " Lazy", icon = "󰒲 ", key = "l" },
                     { action = config, desc = " Config", icon = " ", key = "c" },
+                    { action = "Lazy", desc = " Lazy", icon = "󰒲 ", key = "l" },
+                    { action = "Mason", desc = " Mason", icon = " ", key = "m" },
                     { action = "qa", desc = " Quit", icon = " ", key = "q" },
                 },
                 footer = function()
