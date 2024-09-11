@@ -3,6 +3,12 @@ vim.g.loaded_perl_provider = 0
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider = 0
 
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
+vim.opt.timeoutlen = 300
+vim.opt.undofile = true
+
 vim.opt.cursorline = true
 vim.opt.guicursor = ""
 vim.opt.laststatus = 3
@@ -24,21 +30,17 @@ vim.opt.ignorecase = true
 vim.opt.incsearch = true
 vim.opt.smartcase = true
 
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
-
 vim.diagnostic.config({
     signs = false,
 })
 
-vim.keymap.set("n", "<leader>l", function()
-    vim.api.nvim_exec2("tabnew", {})
-    vim.fn.termopen("lazygit")
-end)
-
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float)
+vim.keymap.set("n", "<leader>h", vim.lsp.buf.hover)
+vim.keymap.set("n", "<leader>o", vim.lsp.buf.definition)
+
 vim.keymap.set("n", "<leader>e", "<cmd>Explore<CR>")
 vim.keymap.set("n", "<leader>t", "<cmd>terminal<CR>")
+vim.keymap.set("n", "<leader>l", "<cmd>terminal lazygit<CR>")
 
 vim.api.nvim_create_autocmd("CursorMovedI", {
     pattern = "*",
@@ -54,19 +56,12 @@ vim.api.nvim_create_autocmd("CursorMovedI", {
     end,
 })
 
-vim.api.nvim_create_autocmd("TermOpen", {
-    pattern = "*",
-    callback = function()
-        vim.api.nvim_exec2("setlocal nonumber norelativenumber signcolumn=no", {})
-        vim.api.nvim_exec2("startinsert", {})
-    end,
-})
-
 vim.api.nvim_exec2("autocmd BufWrite * lua vim.lsp.buf.format()", {})
 vim.api.nvim_exec2("autocmd CursorMoved * normal zz", {})
 vim.api.nvim_exec2("autocmd TermClose * bd!", {})
+vim.api.nvim_exec2("autocmd TermOpen * setlocal nonumber norelativenumber signcolumn=no", {})
+vim.api.nvim_exec2("autocmd TermOpen * startinsert", {})
 vim.api.nvim_exec2("autocmd TextYankPost * lua vim.highlight.on_yank()", {})
-
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
