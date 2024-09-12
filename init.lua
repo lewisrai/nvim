@@ -42,22 +42,28 @@ vim.keymap.set("n", "<leader>e", "<cmd>Explore<CR>")
 vim.keymap.set("n", "<leader>t", "<cmd>terminal<CR>")
 vim.keymap.set("n", "<leader>l", "<cmd>terminal lazygit<CR>")
 
-vim.api.nvim_create_autocmd("CursorMovedI", {
-    pattern = "*",
-    callback = function()
-        local line = vim.api.nvim_win_get_cursor(0)[1]
-        if line ~= vim.b.last_line then
-            vim.api.nvim_exec2("normal zz", {})
-            vim.b.last_line = line
+vim.keymap.set("n", "<leader>mg", "<cmd>cd ", {})
+vim.keymap.set("n", "<leader>ml", "<cmd>Lazy<CR>", {})
+vim.keymap.set("n", "<leader>mm", "<cmd>Mason<CR>", {})
+vim.keymap.set("n", "<leader>mn", "<cmd>ene | startinsert", {})
+vim.keymap.set("n", "<leader>mc", "<cmd>wa! | %bd! | cd C:/Users/Raiwin/Appdata/Local/nvim<CR>", {})
+vim.keymap.set("n", "<leader>mp", "<cmd>wa! | %bd! | cd C:/Code/Projects<CR>", {})
 
-            local column = vim.fn.getcurpos()[5]
-            vim.fn.cursor({ line, column })
-        end
-    end,
-})
+function Center_Cursor_I()
+    local line = vim.api.nvim_win_get_cursor(0)[1]
+
+    if line ~= vim.b.last_line then
+        vim.api.nvim_exec2("normal zz", {})
+        vim.b.last_line = line
+
+        local column = vim.fn.getcurpos()[5]
+        vim.fn.cursor({ line, column })
+    end
+end
 
 vim.api.nvim_exec2("autocmd BufWrite * lua vim.lsp.buf.format()", {})
 vim.api.nvim_exec2("autocmd CursorMoved * normal zz", {})
+vim.api.nvim_exec2("autocmd CursorMovedI * lua Center_Cursor_I()", {})
 vim.api.nvim_exec2("autocmd TermClose * bd!", {})
 vim.api.nvim_exec2("autocmd TermOpen * setlocal nonumber norelativenumber signcolumn=no", {})
 vim.api.nvim_exec2("autocmd TermOpen * startinsert", {})
@@ -66,16 +72,28 @@ vim.api.nvim_exec2("autocmd TextYankPost * lua vim.highlight.on_yank()", {})
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-    vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "https://github.com/folke/lazy.nvim.git",
-        "--branch=stable",
-        lazypath,
-    })
+    local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+    local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+
+    if vim.v.shell_error ~= 0 then
+        vim.api.nvim_echo({
+            { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+            { out,                            "WarningMsg" },
+            { "\nPress any key to exit..." },
+        }, true, {})
+
+        vim.fn.getchar()
+        os.exit(1)
+    end
 end
 
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup("plugins")
+require("lazy").setup({
+    spec = {
+        { import = "plugins" },
+    },
+    rocks = {
+        enabled = false,
+    }
+})
