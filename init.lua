@@ -3,6 +3,9 @@ vim.g.loaded_perl_provider = 0
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider = 0
 
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
@@ -42,16 +45,11 @@ vim.keymap.set("n", "<leader>e", "<cmd>Explore<CR>")
 vim.keymap.set("n", "<leader>t", "<cmd>terminal<CR>")
 vim.keymap.set("n", "<leader>l", "<cmd>terminal lazygit<CR>")
 
-local function go_to_shortcut()
-    vim.api.nvim_input(":cd ")
-end
-
-vim.keymap.set("n", "<leader>mg", go_to_shortcut, {})
 vim.keymap.set("n", "<leader>ml", "<cmd>Lazy<CR>", {})
 vim.keymap.set("n", "<leader>mm", "<cmd>Mason<CR>", {})
 vim.keymap.set("n", "<leader>mn", "<cmd>ene | startinsert", {})
-vim.keymap.set("n", "<leader>mc", "<cmd>wa! | %bd! | cd C:/Users/Raiwin/Appdata/Local/nvim<CR>", {})
-vim.keymap.set("n", "<leader>mp", "<cmd>wa! | %bd! | cd C:/Code/Projects<CR>", {})
+vim.keymap.set("n", "<leader>mc", "<cmd>wa! | %bd! | cd C:/Users/Raiwin/Appdata/Local/nvim | e .<CR>", {})
+vim.keymap.set("n", "<leader>mp", "<cmd>wa! | %bd! | cd C:/Code/Projects | e .<CR>", {})
 
 function Center_Cursor_I()
     local line = vim.api.nvim_win_get_cursor(0)[1]
