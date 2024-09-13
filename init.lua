@@ -42,7 +42,11 @@ vim.keymap.set("n", "<leader>e", "<cmd>Explore<CR>")
 vim.keymap.set("n", "<leader>t", "<cmd>terminal<CR>")
 vim.keymap.set("n", "<leader>l", "<cmd>terminal lazygit<CR>")
 
-vim.keymap.set("n", "<leader>mg", "<cmd>cd ", {})
+local function go_to_shortcut()
+    vim.api.nvim_input(":cd ")
+end
+
+vim.keymap.set("n", "<leader>mg", go_to_shortcut, {})
 vim.keymap.set("n", "<leader>ml", "<cmd>Lazy<CR>", {})
 vim.keymap.set("n", "<leader>mm", "<cmd>Mason<CR>", {})
 vim.keymap.set("n", "<leader>mn", "<cmd>ene | startinsert", {})
