@@ -1,5 +1,6 @@
 return {
     "stevearc/oil.nvim",
+    event = "VimEnter",
     opts = function()
         vim.keymap.set("n", "-", "<cmd>Oil<CR>", {})
 
