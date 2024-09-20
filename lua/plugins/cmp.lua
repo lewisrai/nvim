@@ -1,10 +1,10 @@
 return {
     "hrsh7th/nvim-cmp",
     event = "VeryLazy",
-    config = function()
+    opts = function()
         local cmp = require("cmp")
 
-        cmp.setup({
+        return {
             window = {
                 completion = cmp.config.window.bordered(),
                 documentation = cmp.config.window.bordered(),
@@ -16,6 +16,6 @@ return {
             sources = cmp.config.sources({
                 { name = "nvim_lsp" },
             }),
-        })
+        }
     end,
 }

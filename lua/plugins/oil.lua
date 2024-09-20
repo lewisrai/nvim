@@ -1,8 +1,11 @@
 return {
     "stevearc/oil.nvim",
-    event = "VeryLazy",
-    config = function()
-        require("oil").setup({
+    opts = function()
+        vim.keymap.set("n", "-", "<cmd>Oil<CR>", {})
+
+        return {
+            delete_to_trash = true,
+
             keymaps = {
                 ["<CR>"] = "actions.select",
                 ["<C-c>"] = "actions.close",
@@ -16,8 +19,6 @@ return {
             view_options = {
                 show_hidden = true,
             },
-        })
-
-        vim.keymap.set("n", "-", "<cmd>Oil<CR>", {})
+        }
     end
 }

@@ -2,22 +2,9 @@ return {
     "neovim/nvim-lspconfig",
     event = "VeryLazy",
     dependencies = {
-        "williamboman/mason.nvim",
-        "williamboman/mason-lspconfig.nvim",
         "hrsh7th/cmp-nvim-lsp",
     },
     config = function()
-        require("mason").setup({})
-        require("mason-lspconfig").setup({
-            ensure_installed = {
-                "clangd",
-                "jdtls",
-                "jedi_language_server",
-                "lua_ls",
-                "ruff",
-            }
-        })
-
         local lspconfig = require("lspconfig")
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
