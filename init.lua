@@ -3,8 +3,12 @@ vim.g.loaded_perl_provider = 0
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider = 0
 
-vim.g.loaded_netrw = 1
+vim.g.loaded_gzip = 1
 vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_tarPlugin = 1
+vim.g.loaded_tohtml = 1
+vim.g.loaded_tutor = 1
+vim.g.loaded_zipPlugin = 1
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
@@ -52,21 +56,27 @@ vim.keymap.set("n", "<leader>mn", "<cmd>ene | startinsert")
 vim.keymap.set("n", "<leader>mc", "<cmd>wa! | %bd! | cd C:/Users/Raiwin/Appdata/Local/nvim | e .<CR>")
 vim.keymap.set("n", "<leader>mp", "<cmd>wa! | %bd! | cd C:/Code/Projects | e .<CR>")
 
-function Center_Cursor_I()
+function Center_Cursor(insert_mode)
     local line = vim.api.nvim_win_get_cursor(0)[1]
 
+    if vim.b.last_line == nil then
+        vim.b.last_line = line
+    end
+
     if line ~= vim.b.last_line then
-        vim.api.nvim_exec2("normal zz", {})
+        vim.api.nvim_exec2("normal! zz", {})
         vim.b.last_line = line
 
-        local column = vim.fn.getcurpos()[5]
-        vim.fn.cursor({ line, column })
+        if insert_mode then
+            local column = vim.fn.getcurpos()[5]
+            vim.fn.cursor({ line, column })
+        end
     end
 end
 
 vim.api.nvim_exec2("autocmd BufWrite * lua vim.lsp.buf.format()", {})
-vim.api.nvim_exec2("autocmd CursorMoved * normal zz", {})
-vim.api.nvim_exec2("autocmd CursorMovedI * lua Center_Cursor_I()", {})
+vim.api.nvim_exec2("autocmd CursorMoved * lua Center_Cursor(false)", {})
+vim.api.nvim_exec2("autocmd CursorMovedI * lua Center_Cursor(true)", {})
 vim.api.nvim_exec2("autocmd TermClose * bd!", {})
 vim.api.nvim_exec2("autocmd TermOpen * setlocal nonumber norelativenumber signcolumn=no", {})
 vim.api.nvim_exec2("autocmd TermOpen * startinsert", {})
