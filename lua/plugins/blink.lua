@@ -15,18 +15,12 @@ return {
                 },
             },
         },
-        trigger = {
-            signature_help = { enabled = true },
-        },
         windows = {
             autocomplete = {
                 border = "single",
             },
             documentation = {
                 auto_show = true,
-                border = "single",
-            },
-            signature_help = {
                 border = "single",
             },
         },
