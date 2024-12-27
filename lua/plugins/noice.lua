@@ -4,12 +4,13 @@ return {
         "MunifTanjim/nui.nvim",
     },
     opts = {
+        popupmenu = { enabled = false },
+        notify = { enabled = false },
         lsp = {
-            override = {
-                ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-                ["vim.lsp.util.stylize_markdown"] = true,
-                ["cmp.entry.get_documentation"] = true,
-            },
+            progress = { enabled = false },
+            hover = { enabled = false },
+            signature = { enabled = false },
+            message = { enabled = false },
         },
     }
 }

@@ -4,17 +4,22 @@ vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider = 0
 
 vim.g.loaded_gzip = 1
+vim.g.loaded_matchit = 1
+vim.g.loaded_matchparen = 1
+vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_remote_plugins = 1
+vim.g.loaded_shada_plugin = 1
+vim.g.loaded_spellfile_plugin = 1
 vim.g.loaded_tarPlugin = 1
-vim.g.loaded_tohtml = 1
-vim.g.loaded_tutor = 1
+--vim.g.loaded_tutor = 1
 vim.g.loaded_zipPlugin = 1
 
 vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+vim.g.maplocalleader = "="
 
 vim.opt.mouse = ""
-vim.opt.timeoutlen = 300
+vim.opt.timeoutlen = 250
 vim.opt.undofile = true
 
 vim.opt.cursorline = true
@@ -33,28 +38,24 @@ vim.opt.softtabstop = 4
 vim.opt.tabstop = 4
 vim.opt.wrap = false
 
-vim.opt.hlsearch = false
 vim.opt.ignorecase = true
-vim.opt.incsearch = true
 vim.opt.smartcase = true
 
-vim.diagnostic.config({
-    signs = false,
-})
+vim.diagnostic.config({ signs = false })
 
+vim.keymap.set("n", "<esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float)
 vim.keymap.set("n", "<leader>h", vim.lsp.buf.hover)
 vim.keymap.set("n", "<leader>o", vim.lsp.buf.definition)
 
-vim.keymap.set("n", "<leader>e", "<cmd>Explore<CR>")
 vim.keymap.set("n", "<leader>t", "<cmd>terminal<CR>")
 vim.keymap.set("n", "<leader>l", "<cmd>terminal lazygit<CR>")
 
-vim.keymap.set("n", "<leader>ml", "<cmd>Lazy<CR>")
-vim.keymap.set("n", "<leader>mm", "<cmd>Mason<CR>")
-vim.keymap.set("n", "<leader>mn", "<cmd>ene | startinsert")
+-- vim.keymap.set("n", "<leader>ml", "<cmd>Lazy<CR>")
+-- vim.keymap.set("n", "<leader>mm", "<cmd>Mason<CR>")
+-- vim.keymap.set("n", "<leader>mn", "<cmd>ene | startinsert")
 vim.keymap.set("n", "<leader>mc", "<cmd>wa! | %bd! | cd C:/Users/Raiwin/Appdata/Local/nvim | e .<CR>")
-vim.keymap.set("n", "<leader>mp", "<cmd>wa! | %bd! | cd C:/Code/Projects | e .<CR>")
+-- vim.keymap.set("n", "<leader>mp", "<cmd>wa! | %bd! | cd C:/Code/Projects | e .<CR>")
 
 function Center_Cursor(insert_mode)
     local line = vim.api.nvim_win_get_cursor(0)[1]
@@ -68,8 +69,7 @@ function Center_Cursor(insert_mode)
         vim.b.last_line = line
 
         if insert_mode then
-            local column = vim.fn.getcurpos()[5]
-            vim.fn.cursor({ line, column })
+            vim.fn.cursor({ line, vim.fn.getcurpos()[5] })
         end
     end
 end
@@ -81,7 +81,6 @@ vim.api.nvim_exec2("autocmd TermClose * bd!", {})
 vim.api.nvim_exec2("autocmd TermOpen * setlocal nonumber norelativenumber signcolumn=no", {})
 vim.api.nvim_exec2("autocmd TermOpen * startinsert", {})
 vim.api.nvim_exec2("autocmd TextYankPost * lua vim.highlight.on_yank()", {})
-vim.api.nvim_exec2("autocmd VimEnter * e .", {})
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
@@ -107,7 +106,6 @@ require("lazy").setup({
     spec = {
         { import = "plugins" },
     },
-    rocks = {
-        enabled = false,
-    },
+    install = { colorscheme = { "default" } },
+    rocks = { enabled = false },
 })

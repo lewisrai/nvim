@@ -1,54 +1,54 @@
 return {
     "neovim/nvim-lspconfig",
-    event = "VeryLazy",
     dependencies = {
-        "hrsh7th/cmp-nvim-lsp",
+        "saghen/blink.cmp",
+        "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
     },
-    config = function()
-        local lspconfig = require("lspconfig")
-        local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-        lspconfig.biome.setup({})
-
-        lspconfig.clangd.setup({
-            capabilities = capabilities,
-        })
-
-        lspconfig.jdtls.setup({
-            cmd = {
-                "jdtls",
-                "-configuration",
-                "C:/Users/Raiwin/AppData/Local/Temp/jdtls/config",
-                "-data",
-                "C:/Users/Raiwin/AppData/Local/Temp/jdtls/workspace",
+    event = "VeryLazy",
+    opts = {
+        servers = {
+            biome = {},
+            clangd = {},
+            jdtls = {
+                cmd = {
+                    "jdtls",
+                    "-configuration",
+                    "C:/Users/Raiwin/AppData/Local/Temp/jdtls/config",
+                    "-data",
+                    "C:/Users/Raiwin/AppData/Local/Temp/jdtls/workspace",
+                },
+                handlers = {
+                    ["$/progress"] = function() end,
+                },
             },
-            handlers = {
-                ["$/progress"] = function() end,
-            },
-        })
-
-        lspconfig.jedi_language_server.setup({})
-
-        lspconfig.lua_ls.setup({
-            settings = {
-                Lua = {
-                    runtime = {
-                        version = "LuaJIT",
-                    },
-                    workspace = {
-                        checkThirdParty = false,
-                        library = {
-                            vim.env.VIMRUNTIME,
+            jedi_language_server = {},
+            lua_ls = {
+                settings = {
+                    Lua = {
+                        runtime = {
+                            version = "LuaJIT",
                         },
+                        workspace = {
+                            checkThirdParty = false,
+                            library = {
+                                vim.env.VIMRUNTIME,
+                            },
+                        }
                     }
                 }
-            }
-        })
+            },
+            ruff = {},
+            rust_analyzer = {},
+        },
+    },
+    config = function(_, opts)
+        local lspconfig = require("lspconfig")
+        local capabilities = require("blink.cmp").get_lsp_capabilities()
 
-        lspconfig.ruff.setup({})
-
-        lspconfig.rust_analyzer.setup({
-            capabilities = capabilities,
-        })
+        for server, config in pairs(opts.servers) do
+            config.capabilities = capabilities
+            lspconfig[server].setup(config)
+        end
     end,
 }
