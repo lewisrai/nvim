@@ -12,7 +12,7 @@ vim.g.loaded_remote_plugins = 1
 vim.g.loaded_shada_plugin = 1
 vim.g.loaded_spellfile_plugin = 1
 vim.g.loaded_tarPlugin = 1
---vim.g.loaded_tutor = 1
+vim.g.loaded_tutor = 1
 vim.g.loaded_zipPlugin = 1
 
 vim.g.mapleader = " "
@@ -51,11 +51,11 @@ vim.keymap.set("n", "<leader>o", vim.lsp.buf.definition)
 vim.keymap.set("n", "<leader>t", "<cmd>terminal<CR>")
 vim.keymap.set("n", "<leader>l", "<cmd>terminal lazygit<CR>")
 
--- vim.keymap.set("n", "<leader>ml", "<cmd>Lazy<CR>")
--- vim.keymap.set("n", "<leader>mm", "<cmd>Mason<CR>")
--- vim.keymap.set("n", "<leader>mn", "<cmd>ene | startinsert")
+vim.keymap.set("n", "<leader>ml", "<cmd>Lazy<CR>")
+vim.keymap.set("n", "<leader>mm", "<cmd>Mason<CR>")
+vim.keymap.set("n", "<leader>mn", "<cmd>ene | startinsert")
 vim.keymap.set("n", "<leader>mc", "<cmd>wa! | %bd! | cd C:/Users/Raiwin/Appdata/Local/nvim | e .<CR>")
--- vim.keymap.set("n", "<leader>mp", "<cmd>wa! | %bd! | cd C:/Code/Projects | e .<CR>")
+vim.keymap.set("n", "<leader>mp", "<cmd>wa! | %bd! | cd C:/Code/Projects | e .<CR>")
 
 function Center_Cursor(insert_mode)
     local line = vim.api.nvim_win_get_cursor(0)[1]
