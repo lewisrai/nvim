@@ -4,6 +4,7 @@ return {
     opts = {
         bigfile = {},
         notifier = {},
+        picker = {},
     },
     config = function(_, opts)
         require("snacks").setup(opts);
@@ -21,5 +22,10 @@ return {
                 })
             end,
         })
-    end
+    end,
+    keys = {
+        { "<leader>f", function() Snacks.picker.files() end },
+        { "<leader>g", function() Snacks.picker.grep() end },
+        { "<leader>b", function() Snacks.picker.buffers() end },
+    },
 }

@@ -81,6 +81,7 @@ vim.api.nvim_exec2("autocmd TermClose * bd!", {})
 vim.api.nvim_exec2("autocmd TermOpen * setlocal nonumber norelativenumber signcolumn=no", {})
 vim.api.nvim_exec2("autocmd TermOpen * startinsert", {})
 vim.api.nvim_exec2("autocmd TextYankPost * lua vim.highlight.on_yank()", {})
+vim.api.nvim_exec2("autocmd VimEnter * e .", {})
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 

@@ -8,20 +8,20 @@ return {
     event = "VeryLazy",
     opts = {
         servers = {
-            biome = {},
-            clangd = {},
-            jdtls = {
-                cmd = {
-                    "jdtls",
-                    "-configuration",
-                    "C:/Users/Raiwin/AppData/Local/Temp/jdtls/config",
-                    "-data",
-                    "C:/Users/Raiwin/AppData/Local/Temp/jdtls/workspace",
-                },
-                handlers = {
-                    ["$/progress"] = function() end,
-                },
-            },
+            -- biome = {},
+            -- clangd = {},
+            -- jdtls = {
+            --     cmd = {
+            --         "jdtls",
+            --         "-configuration",
+            --         "C:/Users/Raiwin/AppData/Local/Temp/jdtls/config",
+            --         "-data",
+            --         "C:/Users/Raiwin/AppData/Local/Temp/jdtls/workspace",
+            --     },
+            --     handlers = {
+            --         ["$/progress"] = function() end,
+            --     },
+            -- },
             jedi_language_server = {},
             lua_ls = {
                 settings = {
