@@ -5,11 +5,10 @@ return {
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
     },
-    event = "VeryLazy",
     opts = {
         servers = {
-            -- biome = {},
-            -- clangd = {},
+            biome = {},
+            clangd = {},
             -- jdtls = {
             --     cmd = {
             --         "jdtls",

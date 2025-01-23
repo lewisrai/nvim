@@ -8,6 +8,6 @@ Main plugins:
 - mason
 - noice
 - oil
-- telescope
+- snacks
 - tokyonight
 - treesitter

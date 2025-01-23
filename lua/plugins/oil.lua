@@ -5,6 +5,8 @@ return {
     },
     event = "VimEnter",
     opts = function()
+        vim.keymap.set("n", "-", "<cmd>Oil<CR>");
+
         return {
             delete_to_trash = true,
 
@@ -23,7 +25,4 @@ return {
             },
         }
     end,
-    keys = {
-        { "-", "<cmd>Oil<CR>" },
-    }
 }

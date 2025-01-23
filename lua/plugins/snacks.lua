@@ -7,7 +7,11 @@ return {
         picker = {},
     },
     config = function(_, opts)
-        require("snacks").setup(opts);
+        require("snacks").setup(opts)
+
+        vim.keymap.set("n", "<leader>f", Snacks.picker.files)
+        vim.keymap.set("n", "<leader>g", Snacks.picker.grep)
+        vim.keymap.set("n", "<leader>b", Snacks.picker.buffers)
 
         vim.api.nvim_create_autocmd("LspProgress", {
             callback = function(ev)
@@ -23,9 +27,4 @@ return {
             end,
         })
     end,
-    keys = {
-        { "<leader>f", function() Snacks.picker.files() end },
-        { "<leader>g", function() Snacks.picker.grep() end },
-        { "<leader>b", function() Snacks.picker.buffers() end },
-    },
 }

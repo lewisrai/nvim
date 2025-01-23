@@ -44,18 +44,26 @@ vim.opt.smartcase = true
 vim.diagnostic.config({ signs = false })
 
 vim.keymap.set("n", "<esc>", "<cmd>nohlsearch<CR>")
+
 vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float)
 vim.keymap.set("n", "<leader>h", vim.lsp.buf.hover)
 vim.keymap.set("n", "<leader>o", vim.lsp.buf.definition)
-
 vim.keymap.set("n", "<leader>t", "<cmd>terminal<CR>")
 vim.keymap.set("n", "<leader>l", "<cmd>terminal lazygit<CR>")
+
+function Change_CWD(path)
+    vim.api.nvim_exec2("wa!", {})
+    vim.api.nvim_exec2("%bd!", {})
+    vim.lsp.stop_client(vim.lsp.get_clients())
+    vim.api.nvim_exec2("cd " .. path, {})
+    vim.api.nvim_exec2("e .", {})
+end
 
 vim.keymap.set("n", "<leader>ml", "<cmd>Lazy<CR>")
 vim.keymap.set("n", "<leader>mm", "<cmd>Mason<CR>")
 vim.keymap.set("n", "<leader>mn", "<cmd>ene | startinsert")
-vim.keymap.set("n", "<leader>mc", "<cmd>wa! | %bd! | cd C:/Users/Raiwin/Appdata/Local/nvim | e .<CR>")
-vim.keymap.set("n", "<leader>mp", "<cmd>wa! | %bd! | cd C:/Code/Projects | e .<CR>")
+vim.keymap.set("n", "<leader>mc", function() Change_CWD("C:/Users/Raiwin/Appdata/Local/nvim") end)
+vim.keymap.set("n", "<leader>mp", function() Change_CWD("C:/Code/Projects") end)
 
 function Center_Cursor(insert_mode)
     local line = vim.api.nvim_win_get_cursor(0)[1]
