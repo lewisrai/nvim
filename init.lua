@@ -82,6 +82,7 @@ function Center_Cursor(insert_mode)
     end
 end
 
+vim.api.nvim_exec2("autocmd BufEnter * lua Center_Cursor(false)", {})
 vim.api.nvim_exec2("autocmd BufWrite * lua vim.lsp.buf.format()", {})
 vim.api.nvim_exec2("autocmd CursorMoved * lua Center_Cursor(false)", {})
 vim.api.nvim_exec2("autocmd CursorMovedI * lua Center_Cursor(true)", {})

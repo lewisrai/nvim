@@ -7,7 +7,7 @@ return {
         "williamboman/mason-lspconfig.nvim",
         opts = {
             ensure_installed = {
-                -- "jdtls",
+                "jdtls",
                 "jedi_language_server",
                 "lua_ls",
                 "ruff",

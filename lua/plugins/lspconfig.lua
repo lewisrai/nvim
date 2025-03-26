@@ -9,18 +9,18 @@ return {
         servers = {
             biome = {},
             clangd = {},
-            -- jdtls = {
-            --     cmd = {
-            --         "jdtls",
-            --         "-configuration",
-            --         "C:/Users/Raiwin/AppData/Local/Temp/jdtls/config",
-            --         "-data",
-            --         "C:/Users/Raiwin/AppData/Local/Temp/jdtls/workspace",
-            --     },
-            --     handlers = {
-            --         ["$/progress"] = function() end,
-            --     },
-            -- },
+            jdtls = {
+                cmd = {
+                    "jdtls",
+                    "-configuration",
+                    "C:/Users/Raiwin/AppData/Local/Temp/jdtls/config",
+                    "-data",
+                    "C:/Users/Raiwin/AppData/Local/Temp/jdtls/workspace",
+                },
+                handlers = {
+                    ["$/progress"] = function() end,
+                },
+            },
             jedi_language_server = {},
             lua_ls = {
                 settings = {
@@ -43,10 +43,9 @@ return {
     },
     config = function(_, opts)
         local lspconfig = require("lspconfig")
-        local capabilities = require("blink.cmp").get_lsp_capabilities()
 
         for server, config in pairs(opts.servers) do
-            config.capabilities = capabilities
+            config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
             lspconfig[server].setup(config)
         end
     end,
