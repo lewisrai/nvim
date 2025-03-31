@@ -16,7 +16,7 @@ vim.g.loaded_tutor = 1
 vim.g.loaded_zipPlugin = 1
 
 vim.g.mapleader = " "
-vim.g.maplocalleader = "="
+vim.g.maplocalleader = " "
 
 vim.opt.mouse = ""
 vim.opt.timeoutlen = 250
@@ -41,13 +41,17 @@ vim.opt.wrap = false
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
-vim.diagnostic.config({ signs = false })
+vim.diagnostic.config({
+    signs = false,
+    virtual_text = true,
+})
 
 vim.keymap.set("n", "<esc>", "<cmd>nohlsearch<CR>")
 
-vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float)
-vim.keymap.set("n", "<leader>h", vim.lsp.buf.hover)
-vim.keymap.set("n", "<leader>o", vim.lsp.buf.definition)
+vim.keymap.set("n", "<leader>d", function()
+    vim.diagnostic.config({ virtual_lines = { current_line = true } })
+end)
+
 vim.keymap.set("n", "<leader>t", "<cmd>terminal<CR>")
 vim.keymap.set("n", "<leader>l", "<cmd>terminal lazygit<CR>")
 
@@ -61,11 +65,12 @@ end
 
 vim.keymap.set("n", "<leader>ml", "<cmd>Lazy<CR>")
 vim.keymap.set("n", "<leader>mm", "<cmd>Mason<CR>")
-vim.keymap.set("n", "<leader>mn", "<cmd>ene | startinsert")
 vim.keymap.set("n", "<leader>mc", function() Change_CWD("C:/Users/Raiwin/Appdata/Local/nvim") end)
 vim.keymap.set("n", "<leader>mp", function() Change_CWD("C:/Code/Projects") end)
 
 function Center_Cursor(insert_mode)
+    vim.diagnostic.config({ virtual_lines = false })
+
     local line = vim.api.nvim_win_get_cursor(0)[1]
 
     if vim.b.last_line == nil then
@@ -77,7 +82,7 @@ function Center_Cursor(insert_mode)
         vim.b.last_line = line
 
         if insert_mode then
-            vim.fn.cursor({ line, vim.fn.getcurpos()[5] })
+            vim.fn.cursor({ line, vim.fn.getcurpos()[3] })
         end
     end
 end
@@ -90,21 +95,20 @@ vim.api.nvim_exec2("autocmd TermClose * bd!", {})
 vim.api.nvim_exec2("autocmd TermOpen * setlocal nonumber norelativenumber signcolumn=no", {})
 vim.api.nvim_exec2("autocmd TermOpen * startinsert", {})
 vim.api.nvim_exec2("autocmd TextYankPost * lua vim.highlight.on_yank()", {})
-vim.api.nvim_exec2("autocmd VimEnter * e .", {})
+vim.api.nvim_exec2("autocmd VimEnter * lua Change_CWD(\"C:/Code/Projects\")", {})
+
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
     local lazyrepo = "https://github.com/folke/lazy.nvim.git"
     local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-
     if vim.v.shell_error ~= 0 then
         vim.api.nvim_echo({
             { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
             { out,                            "WarningMsg" },
             { "\nPress any key to exit..." },
         }, true, {})
-
         vim.fn.getchar()
         os.exit(1)
     end
@@ -114,8 +118,177 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
     spec = {
-        { import = "plugins" },
+        {
+            "saghen/blink.cmp",
+            version = "*",
+            opts = { signature = { enabled = true } },
+        },
+        {
+            "lewis6991/gitsigns.nvim",
+            opts = {},
+        },
+        {
+            "nvim-lualine/lualine.nvim",
+            dependencies = { "nvim-tree/nvim-web-devicons" },
+            opts = { options = { theme = "tokyonight-night" } },
+        },
+        {
+            "williamboman/mason.nvim",
+            opts = {},
+        },
+        {
+            "williamboman/mason-lspconfig.nvim",
+            dependencies = { "williamboman/mason.nvim" },
+            opts = {
+                ensure_installed = {
+                    "jdtls",
+                    "jedi_language_server",
+                    "lua_ls",
+                    "ruff",
+                },
+            },
+        },
+        {
+            "neovim/nvim-lspconfig",
+            dependencies = {
+                "saghen/blink.cmp",
+                "williamboman/mason-lspconfig.nvim",
+            },
+            opts = {
+                servers = {
+                    biome = {},
+                    clangd = {},
+                    jdtls = {
+                        cmd = {
+                            "jdtls",
+                            "-configuration",
+                            "C:/Users/Raiwin/AppData/Local/Temp/jdtls/config",
+                            "-data",
+                            "C:/Users/Raiwin/AppData/Local/Temp/jdtls/workspace",
+                        },
+                    },
+                    jedi_language_server = {},
+                    lua_ls = {
+                        settings = {
+                            Lua = {
+                                runtime = {
+                                    version = "LuaJIT",
+                                },
+                                workspace = {
+                                    checkThirdParty = false,
+                                    library = {
+                                        vim.env.VIMRUNTIME,
+                                    },
+                                }
+                            }
+                        }
+                    },
+                    ruff = {},
+                    rust_analyzer = {},
+                },
+            },
+            config = function(_, opts)
+                local lspconfig = require("lspconfig")
+
+                for server, config in pairs(opts.servers) do
+                    config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
+                    lspconfig[server].setup(config)
+                end
+            end,
+        },
+        {
+            "folke/noice.nvim",
+            dependencies = { "MunifTanjim/nui.nvim" },
+            opts = {
+                popupmenu = { enabled = false },
+                notify = { enabled = false },
+                lsp = {
+                    progress = { enabled = false },
+                    hover = { enabled = false },
+                    signature = { enabled = false },
+                    message = { enabled = false },
+                },
+            },
+        },
+        {
+            "stevearc/oil.nvim",
+            dependencies = { "nvim-tree/nvim-web-devicons" },
+            event = "VimEnter",
+            opts = function()
+                vim.keymap.set("n", "-", "<cmd>Oil<CR>");
+
+                return {
+                    delete_to_trash = true,
+                    keymaps = {
+                        ["<CR>"] = "actions.select",
+                        ["<C-c>"] = { "actions.close", mode = "n" },
+                        ["-"] = { "actions.parent", mode = "n" },
+                        ["_"] = { "actions.open_cwd", mode = "n" },
+                        ["~"] = { "actions.cd", mode = "n" },
+                    },
+                    use_default_keymaps = false,
+                    view_options = { show_hidden = true },
+                }
+            end,
+        },
+        {
+            "folke/snacks.nvim",
+            priority = 1000,
+            opts = function()
+                vim.keymap.set("n", "<leader>f", Snacks.picker.files)
+                vim.keymap.set("n", "<leader>g", Snacks.picker.grep)
+                vim.keymap.set("n", "<leader>b", Snacks.picker.buffers)
+
+                return {
+                    notifier = {},
+                    picker = {},
+                }
+            end,
+        },
+        {
+            "folke/tokyonight.nvim",
+            priority = 1000,
+            config = function()
+                vim.cmd.colorscheme("tokyonight-night")
+            end,
+        },
+        {
+            "nvim-treesitter/nvim-treesitter",
+            build = ":TSUpdate",
+            config = function()
+                require("nvim-treesitter.configs").setup({
+                    ensure_installed = {
+                        "bash",
+                        "c",
+                        "css",
+                        "csv",
+                        "html",
+                        "java",
+                        "javascript",
+                        "json",
+                        "lua",
+                        "markdown",
+                        "markdown_inline",
+                        "python",
+                        "regex",
+                        "rust",
+                        "scss",
+                        "toml",
+                        "vim",
+                    },
+                    highlight = { enable = true },
+                    indent = { enable = true },
+                })
+            end,
+        },
     },
-    install = { colorscheme = { "default" } },
     rocks = { enabled = false },
+    install = { colorscheme = { "tokyonight-night" } },
+    ui = {
+        custom_keys = {
+            ["<localleader>l"] = false,
+            ["<localleader>i"] = false,
+            ["<localleader>t"] = false,
+        },
+    },
 })
