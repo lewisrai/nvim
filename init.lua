@@ -154,46 +154,37 @@ require("lazy").setup({
                 "saghen/blink.cmp",
                 "williamboman/mason-lspconfig.nvim",
             },
-            opts = {
-                servers = {
-                    biome = {},
-                    clangd = {},
-                    jdtls = {
-                        cmd = {
-                            "jdtls",
-                            "-configuration",
-                            "C:/Users/Raiwin/AppData/Local/Temp/jdtls/config",
-                            "-data",
-                            "C:/Users/Raiwin/AppData/Local/Temp/jdtls/workspace",
-                        },
-                    },
-                    jedi_language_server = {},
-                    lua_ls = {
-                        settings = {
-                            Lua = {
-                                runtime = {
-                                    version = "LuaJIT",
+            config = function()
+                vim.lsp.config("jdtls",
+                    {
+                        "jdtls",
+                        "-configuration",
+                        "C:/Users/Raiwin/AppData/Local/Temp/jdtls/config",
+                        "-data",
+                        "C:/Users/Raiwin/AppData/Local/Temp/jdtls/workspace",
+                    })
+                vim.lsp.config("lua_ls", {
+                    settings = {
+                        Lua = {
+                            runtime = {
+                                version = "LuaJIT",
+                            },
+                            workspace = {
+                                checkThirdParty = false,
+                                library = {
+                                    vim.env.VIMRUNTIME,
                                 },
-                                workspace = {
-                                    checkThirdParty = false,
-                                    library = {
-                                        vim.env.VIMRUNTIME,
-                                    },
-                                }
                             }
                         }
-                    },
-                    ruff = {},
-                    rust_analyzer = {},
-                },
-            },
-            config = function(_, opts)
-                local lspconfig = require("lspconfig")
+                    }
+                })
 
-                for server, config in pairs(opts.servers) do
-                    config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
-                    lspconfig[server].setup(config)
-                end
+                vim.lsp.enable("biome")
+                vim.lsp.enable("clangd")
+                vim.lsp.enable("jdtls")
+                vim.lsp.enable("jedi_language_server")
+                vim.lsp.enable("ruff")
+                vim.lsp.enable("rust_analyzer")
             end,
         },
         {
